@@ -16,7 +16,7 @@ body {
     max-width: 1100px;
     margin: 0 auto;
     background: white;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     overflow: hidden;
     padding: 35px 40px 45px 40px;
@@ -28,6 +28,7 @@ body {
     border-bottom: 1px solid #d0d7de;
     margin-top: -1px;
 }
+
 .grid-left {
     width: 30%;
     background-color: #f8fafc;
@@ -36,6 +37,7 @@ body {
     font-weight: 500;
     color: #0b2b3b;
 }
+
 .grid-right {
     width: 70%;
     padding: 18px 24px;
@@ -50,10 +52,12 @@ body {
     margin-bottom: 20px;
     flex-wrap: wrap;
 }
+
 .photo-area {
     flex-shrink: 0;
     text-align: center;
 }
+
 .photo-placeholder {
     width: 130px;
     height: 130px;
@@ -69,15 +73,18 @@ body {
     letter-spacing: 1px;
     border: 1px solid #bdc4cc;
 }
+
 .contact-info {
     flex: 1;
 }
+
 .contact-info h1 {
     font-size: 28px;
     font-weight: 600;
     color: #0f3b4f;
     margin-bottom: 8px;
 }
+
 .contact-details {
     margin-top: 12px;
     font-size: 15px;
@@ -86,6 +93,7 @@ body {
     gap: 20px;
     color: #2c3e4e;
 }
+
 .job-title {
     background: #eef2f5;
     display: inline-block;
@@ -105,30 +113,37 @@ h2 {
     border-left: 4px solid #2c7da0;
     padding-left: 14px;
 }
+
 .project-name {
     font-weight: 700;
     font-size: 16px;
     margin-top: 16px;
     color: #1a4b63;
 }
-ul, .text-block {
+
+ul,
+.text-block {
     margin-bottom: 12px;
     padding-left: 20px;
 }
+
 li {
     margin-bottom: 6px;
     font-size: 14.5px;
 }
+
 p {
     font-size: 14.8px;
     margin-bottom: 10px;
 }
+
 .skills-list {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 8px;
 }
+
 .skill-badge {
     background: #eef2fa;
     padding: 3px 12px;
@@ -136,50 +151,79 @@ p {
     font-size: 13.5px;
     color: #1e4663;
 }
+
 .recommendation {
     margin-bottom: 14px;
     border-left: 2px solid #cbdde6;
     padding-left: 16px;
 }
+
 .rec-name {
     font-weight: 700;
     font-size: 15px;
 }
+
 hr {
     margin: 16px 0;
     border: none;
     border-top: 1px solid #e2e8f0;
 }
+
 .flex-row {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
 .date {
     color: #5a6e7c;
     font-size: 14px;
 }
+
 a {
     color: #2c7da0;
     text-decoration: none;
 }
+
 a:hover {
     text-decoration: underline;
 }
+
 @media (max-width: 750px) {
     .resume {
         padding: 20px;
     }
-    .grid-left, .grid-right {
+
+    .grid-left,
+    .grid-right {
         width: 100%;
         border-right: none;
     }
+
     .grid-section {
         flex-direction: column;
     }
+
     .header-flex {
         flex-direction: column;
         align-items: center;
         text-align: center;
+    }
+
+    .profile-photo {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #2c7da0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-photo {
+        transition: transform 0.3s ease;
+    }
+
+    .profile-photo:hover {
+        transform: scale(1.05);
     }
 }
