@@ -4,7 +4,7 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "Резюме/my_resume_website/**"
+      - "my_resume_website/**"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
@@ -29,8 +29,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Путь относительно корня репозитория
-          path: Резюме/my_resume_website
+          path: my_resume_website      # ← ключевое изменение
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
