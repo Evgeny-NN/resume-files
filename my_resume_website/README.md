@@ -1,6 +1,6 @@
 # 📄 Евгений Бегунков — сайт-резюме системного аналитика
 
-[![GitHub Pages](https://img.shields.io/badge/🌐-Демо-2c7da0?style=for-the-badge&logo=github)](https://evgeny-nn.github.io/resume-files/my_resume_website/)  
+[![GitHub Pages](https://img.shields.io/badge/🌐-Демо-2c7da0?style=for-the-badge&logo=github)](https://evgeny-nn.github.io/resume-files/)  
 [![System Analyst](https://img.shields.io/badge/Роль-Системный_аналитик-1f5e7e?style=flat-square)](#)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://html.spec.whatwg.org/)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](https://www.w3.org/Style/CSS/)
@@ -52,7 +52,6 @@
 | **CSS3** | Flexbox/Grid для сеток, медиазапросы, анимации hover |
 | **JavaScript (ES6)** | Защита email, плавный скролл, кнопка печати PDF |
 | **Git & GitHub** | Контроль версий, хостинг через GitHub Pages |
-| **Figma (опционально)** | Прототип макета перед вёрсткой |
 
 > Эти технологии не имеют прямого отношения к моей работе системного аналитика, но демонстрируют владение инструментами для создания clean code и презентационных материалов.
 
