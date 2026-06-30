@@ -60,14 +60,28 @@
                 "title": "📄 WFM: Архитектурное решение для автоматизации планирования ресурсов",
                 "description": "ADR (Architecture Decision Record) по внедрению системы Workforce Management. Включает контекст, обоснование выбора, интеграции, ролевую модель и системные требования.",
                 "badges": [
-                  { "text": "ADR", "class": "" },
-                  { "text": "Архитектура", "class": "green" },
-                  { "text": "WFM", "class": "orange" }
+                    {
+                        "text": "ADR",
+                        "class": ""
+                    },
+                    {
+                        "text": "Архитектура",
+                        "class": "green"
+                    },
+                    {
+                        "text": "WFM",
+                        "class": "orange"
+                    }
                 ],
                 "buttons": [
-                  { "text": "📄 Смотреть ADR", "url": "portfolio/wfm-project/ADR-001.md", "class": "btn", "target": "_blank" }
+                    {
+                        "text": "📄 Смотреть ADR",
+                        "url": "portfolio/wfm-project/",
+                        "class": "btn",
+                        "target": "_blank"
+                    }
                 ]
-              },
+            },
             {
                 "title": "📄 Другие проекты (в разработке)",
                 "description": "Здесь будут появляться новые артефакты: BRD, BPMN диаграммы, спецификации требований, примеры технических заданий на разработку, проекты BI."
