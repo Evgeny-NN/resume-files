@@ -1,4 +1,5 @@
-# 🧑‍💼 Портфолио системного аналитика — Евгений Бегунков
+# 🧑‍💼 Портфолио системного аналитика 
+# Бегункова Евгения Александровича
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-живой%20сайт-brightgreen)](https://evgeny-nn.github.io/resume-files/)
 [![GitHub repo](https://img.shields.io/badge/GitHub-репозиторий-181717?logo=github)](https://github.com/Evgeny-NN/resume-files)
@@ -30,6 +31,6 @@ resume-files/
 ├── README.md                   # Этот файл
 └── (прочие служебные файлы)
 
-Как работает автоматизация контента
+**Как работает автоматизация контента**
 Все текстовые данные (заголовки, описания проектов, список навыков, контакты и т.д.) вынесены в единый файл data.json.
 Обе страницы (index.html и resume/index.html) с помощью скрипта loadData.js загружают этот JSON и динамически заполняют свои секции.

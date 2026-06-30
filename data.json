@@ -9,7 +9,7 @@
             },
             {
                 "text": "🐙 GitHub",
-                "url": "https://github.com/Evgeny-NN",
+                "url": "https://github.com/Evgeny-NN/resume-files",
                 "target": "_blank"
             },
             {
@@ -221,15 +221,15 @@
                 "certificates": [
                     {
                         "text": "📑 Мониторинг и алертинг",
-                        "url": "https://github.com/Evgeny-NN/resume-files/blob/main/%D0%A1%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D1%8B/%D0%9C%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3%20%D0%B8%20%D0%B0%D0%BB%D0%B5%D1%80%D1%82%D0%B8%D0%BD%D0%B3/%D0%91%D0%B5%D0%B3%D1%83%D0%BD%D0%BA%D0%BE%D0%B2%20%D0%95%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9%20%D0%9C%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3%20%D0%B8%20%D0%B0%D0%BB%D0%B5%D1%80%D1%82%D0%B8%D0%BD%D0%B3.png"
+                        "url": "https://github.com/Evgeny-NN/resume-files/blob/main/resume/Сертификаты/Мониторинг%20и%20алертинг/Бегунков%20Евгений%20Мониторинг%20и%20алертинг.png"
                     },
                     {
                         "text": "📑 Основы GO",
-                        "url": "https://github.com/Evgeny-NN/resume-files/blob/main/%D0%A1%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D1%8B/GO/%D0%91%D0%B5%D0%B3%D1%83%D0%BD%D0%BA%D0%BE%D0%B2%20%D0%95%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%BD%D0%B0%20Go.png"
+                        "url": "https://github.com/Evgeny-NN/resume-files/blob/main/resume/Сертификаты/GO/Бегунков%20Евгений%20Основы%20программирования%20на%20Go.png"
                     },
                     {
                         "text": "📑 Основы Greenplum",
-                        "url": "https://github.com/Evgeny-NN/resume-files/blob/main/%D0%A1%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D1%8B/Greenplum/%D0%91%D0%B5%D0%B3%D1%83%D0%BD%D0%BA%D0%BE%D0%B2%20%D0%95%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9%20%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D1%81%20%D0%A1%D0%A3%D0%91%D0%94%20Greenplum.png"
+                        "url": "https://github.com/Evgeny-NN/resume-files/blob/main/resume/Сертификаты/Greenplum/Бегунков%20Евгений%20Основы%20работы%20с%20СУБД%20Greenplum.png"
                     }
                 ]
             }
