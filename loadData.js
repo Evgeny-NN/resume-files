@@ -16,12 +16,9 @@
         })
         .then(data => {
             const isResumePage = document.querySelector('.resume') !== null;
-            const isPortfolioPage = document.querySelector('.nav') !== null && document.querySelector('.card') !== null;
 
             if (isResumePage) {
                 fillResume(data.resume);
-            } else if (isPortfolioPage) {
-                fillPortfolio(data.portfolio);
             } else {
                 fillPortfolio(data.portfolio);
             }
@@ -48,8 +45,18 @@
             });
         }
 
-        const h2Projects = findElementByText('h2', '📌 Портфолио проектов');
+        // Ищем заголовок проектов – сначала по id, потом по тексту
+        let h2Projects = document.getElementById('projects');
+        if (!h2Projects) {
+            h2Projects = findElementByText('h2', '📌 Портфолио проектов');
+        }
+        // Если не нашли, попробуем без эмодзи
+        if (!h2Projects) {
+            h2Projects = findElementByText('h2', 'Портфолио проектов');
+        }
+
         if (h2Projects) {
+            // Удаляем старые карточки (если они есть)
             let next = h2Projects.nextElementSibling;
             while (next && next.classList.contains('card')) {
                 const toRemove = next;
@@ -97,11 +104,14 @@
 
                 h2Projects.parentNode.insertBefore(card, h2Projects.nextSibling);
             });
+        } else {
+            console.warn('Заголовок "Портфолио проектов" не найден. Проверьте index.html');
         }
 
+        // Футер – просто заменяем на содержимое data.footer (без добавления ссылки)
         const footer = document.querySelector('.footer');
         if (footer) {
-            footer.innerHTML = data.footer + ' · <a href="https://github.com/Evgeny-NN/resume-files" target="_blank">Исходный код репозитория</a>';
+            footer.innerHTML = data.footer;
         }
     }
 
@@ -358,7 +368,6 @@
             let inList = false;
 
             data.about.forEach((text, index) => {
-                // Если строка является пунктом списка (начинается с одного из ключевых слов)
                 const isListItem = text.startsWith('проектирование') ||
                     text.startsWith('разработку') ||
                     text.startsWith('полное сопровождение');
@@ -367,7 +376,6 @@
                     listItems.push(text);
                     inList = true;
                 } else {
-                    // Если ранее были накоплены пункты списка, закрываем список и вставляем его
                     if (inList && listItems.length > 0) {
                         const ul = document.createElement('ul');
                         listItems.forEach(item => {
@@ -379,14 +387,12 @@
                         listItems = [];
                         inList = false;
                     }
-                    // Обычный абзац
                     const p = document.createElement('p');
                     p.textContent = text;
                     container.appendChild(p);
                 }
             });
 
-            // Если после цикла остались пункты списка (на случай, если они в конце)
             if (inList && listItems.length > 0) {
                 const ul = document.createElement('ul');
                 listItems.forEach(item => {
