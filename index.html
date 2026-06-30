@@ -177,35 +177,14 @@
     </div>
 
     <h2>📌 Портфолио проектов</h2>
+    <!-- Здесь скрипт loadData.js вставит карточки проектов из data.json -->
 
-    <div class="card">
-        <h3>📄 OpenAPI-контракт для платформы управления обучением</h3>
-        <p>
-            Демонстрационный REST API-контракт, демонстрирующий ключевые архитектурные паттерны:
-            OAuth2, композиция схем (<code>allOf</code>), единый стандарт ошибок (RFC 7807),
-            сквозная трассировка (<code>X-Correlation-ID</code>).
-        </p>
-        <p>
-            <span class="badge">OpenAPI 3.0.3</span>
-            <span class="badge green">YAML</span>
-            <span class="badge orange">Портфолио</span>
-        </p>
-        <div class="btn-group">
-            <a href="portfolio/openapi/learning-platform-api.yaml" class="btn" download>📥 Скачать YAML</a>
-            <a href="https://editor.swagger.io/?url=https://raw.githubusercontent.com/Evgeny-NN/resume-files/main/portfolio/openapi/learning-platform-api.yaml"
-                target="_blank" class="btn outline">🔍 Открыть в Swagger Editor</a>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3>📄 Другие проекты (в разработке)</h3>
-        <p>Здесь будут появляться новые артефакты: BRD, BPMN диаграммы, спецификации требований, примеры технических заданий на разработку, проекты BI.</p>
-    </div>
-
-        <div class="footer">
+    <div class="footer">
         &copy; 2026 Евгений Бегунков · <a href="https://github.com/Evgeny-NN/resume-files" target="_blank">Исходный код
             репозитория</a>
     </div>
+
+    <script src="loadData.js"></script>
 </body>
 
 </html>
