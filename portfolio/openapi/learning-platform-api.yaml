@@ -1,0 +1,502 @@
+openapi: 3.0.3
+info:
+  title: Corporate Learning & Development Platform API (Portfolio Demo)
+  version: "2.0.0"
+  description: |-
+    Демонстрационный REST API-контракт для портфолио системного аналитика.
+
+    **Архитектурные фичи, реализованные в контракте:**
+    - Многоуровневая аутентификация (OAuth2 Authorization Code для пользователей + Client Credentials для M2M).
+    - Композиция схем (`allOf`) для устранения дублирования моделей ошибок.
+    - Глобальные параметры трассировки (`X-Correlation-ID`) и сессионные Cookie.
+    - Сериализация Query-параметров и полиморфизм (разделение `Employee` / `EmployeeCreate` через `readOnly`).
+    - Стандартизация ответов согласно RFC 7807 (Problem Details).
+  contact:
+    name: System Analyst Portfolio
+    email: portfolio@example.com
+servers:
+  - url: "https://api.learning-platform.demo/v1"
+    description: Демонстрационный сервер (Mock)
+
+tags:
+  - name: personnel
+    description: Управление кадровым составом (сотрудники и роли)
+
+# Глобальная безопасность (требует OAuth2 для всех методов, кроме явно отмеченных)
+security:
+  - oauth2AuthCode:
+      - read:employees
+      - write:employees
+
+paths:
+  # ------------------------------------------------------------
+  # РЕСУРС: Сотрудники (стандартный REST CRUD)
+  # ------------------------------------------------------------
+  /v1/employees:
+    post:
+      summary: Добавление нового сотрудника в систему
+      description: Создает запись о новом сотруднике. UUID генерируется автоматически на сервере.
+      operationId: addEmployee
+      tags:
+        - personnel
+      parameters:
+        - $ref: "#/components/parameters/CorrelationIdHeader"
+        - $ref: "#/components/parameters/SessionCookie"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeeCreate"
+      responses:
+        "201":
+          description: Сотрудник успешно создан
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: SUCCESS
+                  uuid:
+                    type: string
+                    format: uuid
+                    description: ID созданной записи
+                    example: 550e8400-e29b-41d4-a716-446655440000
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "409":
+          $ref: "#/components/responses/ConflictError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+
+    get:
+      summary: Получение списка всех сотрудников
+      description: Возвращает массив всех активных сотрудников в системе
+      operationId: getEmployees
+      tags:
+        - personnel
+      parameters:
+        - $ref: "#/components/parameters/CorrelationIdHeader"
+        - $ref: "#/components/parameters/SessionCookie"
+      responses:
+        "200":
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Employee"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+
+  # Эндпоинт для поиска с фильтрами (Query params)
+  /v1/employee:
+    get:
+      summary: Поиск сотрудника по различным критериям
+      description: |-
+        Гибкий поиск по ID, email или фамилии. 
+        Если найдено несколько совпадений по фамилии, возвращается список однофамильцев.
+      operationId: findEmployee
+      tags:
+        - personnel
+      parameters:
+        - $ref: "#/components/parameters/CorrelationIdHeader"
+        - $ref: "#/components/parameters/SessionCookie"
+        - $ref: "#/components/parameters/QueryId"
+        - $ref: "#/components/parameters/QueryEmail"
+        - $ref: "#/components/parameters/QueryLastName"
+      responses:
+        "200":
+          description: Успешный запрос
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Employee"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /v1/employees/{employeeId}:
+    put:
+      summary: Полное обновление данных сотрудника
+      operationId: updateEmployee
+      tags:
+        - personnel
+      security:
+        - oauth2AuthCode:
+            - write:employees
+            - update:employees
+      parameters:
+        - $ref: "#/components/parameters/CorrelationIdHeader"
+        - $ref: "#/components/parameters/SessionCookie"
+        - $ref: "#/components/parameters/EmployeeIdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeePut"
+      responses:
+        "200":
+          description: Данные обновлены
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+
+    delete:
+      summary: Удаление сотрудника из базы данных (мягкое удаление)
+      operationId: deleteEmployee
+      tags:
+        - personnel
+      security:
+        - oauth2AuthCode:
+            - delete:employees
+      parameters:
+        - $ref: "#/components/parameters/CorrelationIdHeader"
+        - $ref: "#/components/parameters/SessionCookie"
+        - $ref: "#/components/parameters/EmployeeIdPath"
+      responses:
+        "200":
+          description: Сотрудник успешно удален (возвращаем данные удаленного ресурса для аудита)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    format: uuid
+                    example: 550e8400-e29b-41d4-a716-446655440000
+                  firstName:
+                    type: string
+                    example: Иван
+                  lastName:
+                    type: string
+                    example: Петров
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+
+# ------------------------------------------------------------
+# КОМПОНЕНТЫ (Переиспользуемые блоки)
+# ------------------------------------------------------------
+components:
+  securitySchemes:
+    # Сценарий 1: Для интерактивных пользователей (Frontend)
+    oauth2AuthCode:
+      type: oauth2
+      description: Авторизация через внешнего Identity Provider (SSO) с редиректом
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.demo-platform.com/oauth2/authorize
+          tokenUrl: https://auth.demo-platform.com/oauth2/token
+          scopes:
+            read:employees: Доступ к просмотру данных сотрудников
+            write:employees: Доступ к созданию и редактированию
+            update:employees: Доступ к обновлению специфических полей
+            delete:employees: Право на удаление записей (требует повышенных привилегий)
+    # Сценарий 2: Для машинного взаимодействия (Service-to-Service)
+    oauth2ClientCreds:
+      type: oauth2
+      description: Аутентификация для внутренних микросервисов и batch-процессов
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.demo-platform.com/oauth2/token
+          scopes:
+            internal:sync: Синхронизация данных с внешними HR-системами
+
+  parameters:
+    # --- Глобальные заголовки и куки ---
+    CorrelationIdHeader:
+      name: X-Correlation-ID
+      in: header
+      description: UUID для сквозной трассировки запроса через все микросервисы
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: 550e8400-e29b-41d4-a716-446655440000
+    SessionCookie:
+      name: SESSIONID
+      in: cookie
+      description: HttpOnly-кука для поддержки stateful-сессии (можно заменить на Bearer токен)
+      required: false
+      schema:
+        type: string
+        example: abc123xyz789
+    # --- Параметры пути ---
+    EmployeeIdPath:
+      name: employeeId
+      in: path
+      description: Уникальный UUID сотрудника
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: 550e8400-e29b-41d4-a716-446655440000
+    # --- Query-параметры для фильтрации ---
+    QueryId:
+      name: id
+      in: query
+      description: Поиск по точному совпадению UUID
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: 550e8400-e29b-41d4-a716-446655440000
+    QueryEmail:
+      name: email
+      in: query
+      description: Поиск по email (регистронезависимый)
+      required: false
+      schema:
+        type: string
+        format: email
+        example: ivan.petrov@example.com
+    QueryLastName:
+      name: lastName
+      in: query
+      description: Поиск по фамилии (поддерживает частичное совпадение)
+      required: false
+      schema:
+        type: string
+        example: Петров
+
+  schemas:
+    # ------------------------------------------------------------
+    # 1. КАНОНИЧНАЯ МОДЕЛЬ ОШИБОК (единая структура для всех кодов)
+    # ------------------------------------------------------------
+    BaseError:
+      type: object
+      required:
+        - errCode
+        - errDescEN
+        - errTimestamp
+      properties:
+        errCode:
+          type: integer
+          description: HTTP статус-код ошибки
+        errDescEN:
+          type: string
+          description: Техническое описание ошибки на английском
+        errDescRU:
+          type: string
+          description: Пользовательское описание ошибки на русском
+        errTimestamp:
+          type: string
+          format: date-time
+          description: ISO-8601 время возникновения ошибки
+        traceId:
+          type: string
+          description: Сквозной идентификатор для связи с логами (копия X-Correlation-ID)
+          example: 550e8400-e29b-41d4-a716-446655440000
+
+    Error_400:
+      allOf:
+        - $ref: "#/components/schemas/BaseError"
+        - type: object
+          properties:
+            errCode: { example: 400 }
+            errDescEN:
+              { example: "Bad Request. Validation failed or malformed JSON." }
+            errDescRU: { example: "Неверный запрос. Проверьте формат данных." }
+    Error_404:
+      allOf:
+        - $ref: "#/components/schemas/BaseError"
+        - type: object
+          properties:
+            errCode: { example: 404 }
+            errDescEN: { example: "Resource not found" }
+            errDescRU: { example: "Запрашиваемый ресурс не найден" }
+    Error_409:
+      allOf:
+        - $ref: "#/components/schemas/BaseError"
+        - type: object
+          properties:
+            errCode: { example: 409 }
+            errDescEN:
+              { example: "Conflict. Employee with this UUID already exists." }
+            errDescRU:
+              { example: "Конфликт. Сотрудник с таким UUID уже существует." }
+
+    # ------------------------------------------------------------
+    # 2. СУЩНОСТЬ "СОТРУДНИК" (с разделением на Read/Write)
+    # ------------------------------------------------------------
+    Employee:
+      type: object
+      required:
+        - uuid
+        - firstName
+        - lastName
+        - role
+        - isActive
+        - contactData
+      properties:
+        uuid:
+          description: Уникальный идентификатор (генерируется сервером)
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+          readOnly: true
+        firstName:
+          description: Имя сотрудника
+          type: string
+          example: Иван
+        lastName:
+          description: Фамилия сотрудника
+          type: string
+          example: Петров
+        position:
+          description: Название должности
+          type: string
+          example: Старший разработчик
+        rank:
+          description: Грейд/уровень (Junior, Middle, Senior)
+          type: string
+          example: Senior
+        role:
+          description: Роль в учебном процессе
+          type: string
+          enum:
+            - mentor
+            - student
+          example: mentor
+        contactData:
+          type: object
+          required:
+            - email
+          properties:
+            email:
+              description: Рабочий email
+              type: string
+              format: email
+              example: ivan.petrov@example.com
+            phone:
+              description: Рабочий номер телефона
+              type: string
+              example: +70001112233
+            messenger:
+              description: Контакт в корпоративном мессенджере
+              type: string
+              example: https://t.me/ivan_p
+        worksSince:
+          description: Дата начала работы в компании
+          type: string
+          format: date-time
+          example: 2023-01-15T09:00:00Z
+        validationScore:
+          description: Результат входного тестирования (в процентах)
+          type: number
+          format: float
+          example: 92.8
+        isActive:
+          type: boolean
+          default: true
+          description: Активен ли сотрудник в системе
+
+    # Модель для POST-запроса (без readOnly поля uuid)
+    EmployeeCreate:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - role
+        - isActive
+        - contactData
+      properties:
+        firstName:
+          { $ref: "#/components/schemas/Employee/properties/firstName" }
+        lastName: { $ref: "#/components/schemas/Employee/properties/lastName" }
+        position: { $ref: "#/components/schemas/Employee/properties/position" }
+        rank: { $ref: "#/components/schemas/Employee/properties/rank" }
+        role: { $ref: "#/components/schemas/Employee/properties/role" }
+        contactData:
+          { $ref: "#/components/schemas/Employee/properties/contactData" }
+        worksSince:
+          { $ref: "#/components/schemas/Employee/properties/worksSince" }
+        validationScore:
+          { $ref: "#/components/schemas/Employee/properties/validationScore" }
+        isActive: { $ref: "#/components/schemas/Employee/properties/isActive" }
+
+    # Модель для PUT-запроса (идентична Create, но может потребовать обязательности всех полей)
+    EmployeePut:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - role
+        - isActive
+        - contactData
+      properties:
+        firstName:
+          { $ref: "#/components/schemas/Employee/properties/firstName" }
+        lastName: { $ref: "#/components/schemas/Employee/properties/lastName" }
+        position: { $ref: "#/components/schemas/Employee/properties/position" }
+        rank: { $ref: "#/components/schemas/Employee/properties/rank" }
+        role: { $ref: "#/components/schemas/Employee/properties/role" }
+        contactData:
+          { $ref: "#/components/schemas/Employee/properties/contactData" }
+        worksSince:
+          { $ref: "#/components/schemas/Employee/properties/worksSince" }
+        validationScore:
+          { $ref: "#/components/schemas/Employee/properties/validationScore" }
+        isActive: { $ref: "#/components/schemas/Employee/properties/isActive" }
+
+  # ------------------------------------------------------------
+  # 3. СТАНДАРТИЗИРОВАННЫЕ ОТВЕТЫ (HTTP Responses)
+  # ------------------------------------------------------------
+  responses:
+    BadRequest:
+      description: Ошибка валидации входных данных
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error_400"
+    NotFoundError:
+      description: Ресурс не найден по указанному идентификатору
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error_404"
+    ConflictError:
+      description: Конфликт при создании (дублирование ключа)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error_409"
+    UnauthorizedError:
+      description: Отсутствует или истек токен аутентификации
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error_400"
+    ForbiddenError:
+      description: Недостаточно прав доступа для данной операции
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error_400"

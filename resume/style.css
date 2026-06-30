@@ -43,17 +43,18 @@ body {
     border-bottom: 1px solid #0f3b4f;
 }
 .pdf-btn {
-    background: #1f5e7e;
-    color: white;
-    border: none;
-    padding: 4px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.2s, transform 0.1s;
+    color: #ffffff !important;
+    background-color: #007bff;   /* можно изменить на нужный цвет фона */
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 500;
+    transition: background-color 0.2s;
 }
 .pdf-btn:hover {
-    background: #144d66;
+    background-color: #0056b3;
+    color: #ffffff !important;
 }
 .pdf-btn:active {
     transform: scale(0.97);

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Евгений Бегунков - Портфолио системного аналитика</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f8f9fa;
+            color: #222;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* --- НАВИГАЦИЯ В ШАПКЕ --- */
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .nav a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .nav a:hover {
+            color: #1a6e9e;
+            text-decoration: underline;
+        }
+
+        .nav a:not(:last-child)::after {
+            content: "|";
+            color: #ccc;
+            margin-left: 20px;
+        }
+
+        /* --- ОСТАЛЬНЫЕ СТИЛИ --- */
+        h2 {
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+
+        .badge.green {
+            background: #27ae60;
+        }
+
+        .badge.orange {
+            background: #e67e22;
+        }
+
+        .btn-group {
+            margin-top: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            text-decoration: none;
+        }
+
+        .btn.outline {
+            background: transparent;
+            color: #3498db;
+            border: 1px solid #3498db;
+        }
+
+        .btn.outline:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .footer a {
+            color: #3498db;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Евгений Бегунков</h1>
+    <div class="subtitle">Системный аналитик · Проектирование API · Моделирование бизнес-процессов</div>
+
+    <!-- НАВИГАЦИЯ В ШАПКЕ -->
+    <div class="nav">
+        <a href="resume/">📄 Резюме</a>
+        <a href="https://github.com/Evgeny-NN" target="_blank">🐙 GitHub</a>
+        <a href="https://t.me/Evgeny_NN" target="_blank">💬 Telegram</a>
+        <a href="https://nn.hh.ru/resume/af88156cff107f02ad0039ed1f6d737846437a" target="_blank">📌 HeadHunter</a>
+    </div>
+
+    <h2>📌 Портфолио проектов</h2>
+
+    <div class="card">
+        <h3>📄 OpenAPI-контракт для платформы управления обучением</h3>
+        <p>
+            Демонстрационный REST API-контракт, демонстрирующий ключевые архитектурные паттерны:
+            OAuth2, композиция схем (<code>allOf</code>), единый стандарт ошибок (RFC 7807),
+            сквозная трассировка (<code>X-Correlation-ID</code>).
+        </p>
+        <p>
+            <span class="badge">OpenAPI 3.0.3</span>
+            <span class="badge green">YAML</span>
+            <span class="badge orange">Портфолио</span>
+        </p>
+        <div class="btn-group">
+            <a href="portfolio/openapi/learning-platform-api.yaml" class="btn" download>📥 Скачать YAML</a>
+            <a href="https://editor.swagger.io/?url=https://raw.githubusercontent.com/Evgeny-NN/resume-files/main/portfolio/openapi/learning-platform-api.yaml"
+                target="_blank" class="btn outline">🔍 Открыть в Swagger Editor</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📄 Другие проекты (в разработке)</h3>
+        <p>Здесь будут появляться новые артефакты: BRD, BPMN диаграммы, спецификации требований, примеры технических заданий на разработку, проекты BI.</p>
+    </div>
+
+        <div class="footer">
+        &copy; 2026 Евгений Бегунков · <a href="https://github.com/Evgeny-NN/resume-files" target="_blank">Исходный код
+            репозитория</a>
+    </div>
+</body>
+
+</html>

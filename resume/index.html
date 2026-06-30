@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Евгений Бегунков — Системный аналитик</title>
 
-    <!-- SEO & Open Graph -->
-    <meta name="description"
+        <meta name="description"
         content="Резюме системного аналитика Евгения Бегункова. Опыт в Ecom.tech, проектирование интеграций, Kafka, API, требования.">
     <meta property="og:title" content="Евгений Бегунков — Системный аналитик">
     <meta property="og:description"
@@ -16,8 +15,7 @@
     <meta property="og:image" content="https://evgeny-nn.github.io/resume-files/my_resume_website/images/photo.jpg">
     <meta property="og:url" content="https://evgeny-nn.github.io/resume-files/my_resume_website/">
 
-    <!-- Favicon (замените на свой или раскомментируйте строку с реальным файлом) -->
-    <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
+        <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📄%3C/text%3E%3C/svg%3E">
 
@@ -34,7 +32,10 @@
             <a href="#skills">Навыки</a>
             <a href="#education">Образование</a>
             <a href="#about">Обо мне</a>
-            <button id="downloadPDFBtn" class="pdf-btn">📄 Скачать PDF</button>
+            <!-- ИЗМЕНЕНО: добавлена ссылка на портфолио -->
+            <a href="../">📁 Портфолио</a>
+            <!-- ИЗМЕНЕНО: кнопка теперь ссылка на PDF-файл -->
+            <a href="Begunkov_Evgeny_SA.pdf" download class="pdf-btn">📄 Скачать PDF</a>
         </nav>
 
         <!-- ШАПКА -->
@@ -304,13 +305,7 @@
             emailElement.innerHTML = `<a href="mailto:${fullEmail}">${fullEmail}</a>`;
         }
 
-        // Кнопка "Скачать PDF" (через печать)
-        const pdfBtn = document.getElementById("downloadPDFBtn");
-        if (pdfBtn) {
-            pdfBtn.addEventListener("click", () => {
-                window.print();
-            });
-        }
+        // Удаляем старую логику печати, теперь кнопка — просто ссылка на PDF
 
         // Плавная прокрутка для всех якорных ссылок
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
